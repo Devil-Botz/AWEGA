@@ -285,21 +285,11 @@
         <header class="bg-black/70 backdrop-blur-sm sticky top-0 z-50 shadow-md shadow-indigo-500/10">
             <nav class="container mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center py-4">
                 <!-- Logo and College Name -->
-                <a href="#home" class="flex items-center space-x-0">
-                    <!-- SVG Logo for 'A25' (Awega25) -->
-                    <svg width="40" height="40" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <circle cx="50" cy="50" r="50" fill="url(#logoGrad)"/>
-                      <img src="../media/awega_logo.png" alt="" height="50px" width="50px">
-                      <defs>
-                        <linearGradient id="logoGrad" x1="0" y1="0" x2="100" y2="100">
-                          <stop offset="0%" style="stop-color:#4f46e5;stop-opacity:1" /> <!-- indigo-600 -->
-                          <stop offset="100%" style="stop-color:#a855f7;stop-opacity:1" /> <!-- purple-500 -->
-                        </linearGradient>
-                      </defs>
-                    </svg>
-                    <span class="text-xl font-bold text-white hidden sm:block">
-                        AWEGA
-                    </span>
+                <a href="#home" class="flex items-center space-x-1">
+                 <img src="./media/awega_logo.png" alt="Awega Logo" class="w-14 h-14">
+                <span class="text-xl font-bold text-white hidden sm:block">
+                 AWEGA
+                </span>
                 </a>
                 
                 <!-- Navigation Links (for larger screens) -->
@@ -308,6 +298,7 @@
                     <a href="#live" class="text-gray-300 hover:text-white transition duration-300">Schedule</a>
                     <a href="#gallery" class="text-gray-300 hover:text-white transition duration-300">Gallery</a>
                     <a href="#contact" class="text-gray-300 hover:text-white transition duration-300">Contact</a>
+                    <a href="#about" class="text-gray-300 hover:text-white transition duration-300">About AIMAT</a>
                     
                     <!-- Theme Toggle Button Removed -->
 
@@ -386,7 +377,7 @@
                         <!-- 
                             TODO: Replace this placeholder YouTube link with your actual live stream embed URL.
                         -->
-                        <iframe class="w-full h-full" style="aspect-ratio: 16/9;" src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&mute=1" title="Live Event Stream" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        <iframe class="w-full h-full" style="aspect-ratio: 16/9;" src="https://youtu.be/CezdUj2PEy4?si=dSBJuWmqEZcpFnqZ" title="Live Event Stream" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     </div>
                 </div>
             </section>
@@ -479,9 +470,9 @@
                     </div>
 
                     <div class="text-center mt-12">
-                        <button class="open-gallery-link bg-indigo-600 hover:bg-indigo-500 text-white font-semibold px-8 py-3 rounded-full text-lg transition duration-300 shadow-md">
-                            View Full Gallery
-                        </button>
+                       <a href="gallery.html" class="inline-block bg-indigo-600 hover:bg-indigo-500 text-white font-semibold px-8 py-3 rounded-full text-lg transition duration-300 shadow-md">
+                             View Full Gallery
+                        </a>
                     </div>
                 </div>
             </section>
@@ -495,7 +486,7 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                          <!-- Coordinator Card 1 -->
                         <div class="bg-slate-900/80 backdrop-blur-sm p-6 rounded-lg shadow-lg shadow-fuchsia-500/10 text-center transform hover:scale-105 transition-transform duration-300 border border-fuchsia-500/30">
-                            <img class="w-32 h-32 rounded-full mx-auto border-4 border-fuchsia-500" src="../media/coordinator1.jpeg" alt="Coordinator Jaseena Abbas">
+                            <img class="w-32 h-32 rounded-full mx-auto border-4 border-fuchsia-500" src="./media/coordinator1.jpeg" alt="Coordinator Jaseena Abbas">
                             <h3 class="text-2xl font-bold text-white mt-4">Jaseena Abbas</h3>
                             <p class="text-fuchsia-400 font-semibold">Faculty Coordinator</p>
                             <a href="tel:+919633579544" class="inline-block mt-4 bg-gray-700 text-white px-4 py-2 rounded-full hover:bg-fuchsia-600 transition duration-300">
@@ -504,7 +495,7 @@
                         </div>
                         <!-- Coordinator Card 2 -->
                         <div class="bg-slate-900/80 backdrop-blur-sm p-6 rounded-lg shadow-lg shadow-indigo-500/10 text-center transform hover:scale-105 transition-transform duration-300 border border-indigo-500/30">
-                            <img class="w-32 h-32 rounded-full mx-auto border-4 border-indigo-500" src="../media/coordinator2.jpeg" alt="Coordinator Shahila Shahul">
+                            <img class="w-32 h-32 rounded-full mx-auto border-4 border-indigo-500" src="./media/coordinator2.jpeg" alt="Coordinator Shahila Shahul">
                             <h3 class="text-2xl font-bold text-white mt-4">Shahila Shahul</h3>
                             <p class="text-indigo-400 font-semibold">Faculty Coordinator</p>
                             <a href="tel:+919747901710" class="inline-block mt-4 bg-gray-700 text-white px-4 py-2 rounded-full hover:bg-indigo-600 transition duration-300">
@@ -514,7 +505,7 @@
                 
                         <!-- Coordinator Card 3 -->
                         <div class="bg-slate-900/80 backdrop-blur-sm p-6 rounded-lg shadow-lg shadow-cyan-500/10 text-center transform hover:scale-105 transition-transform duration-300 border border-cyan-500/30">
-                            <img class="w-32 h-32 rounded-full mx-auto border-4 border-cyan-500" src="https://placehold.co/150x150/555/fff?text=Jemsheena" alt="Coordinator Jemsheena M A">
+                            <img class="w-32 h-32 rounded-full mx-auto border-4 border-cyan-500" src="./media/coordinator3.jpg" alt="Coordinator Jemsheena M A">
                             <h3 class="text-2xl font-bold text-white mt-4">Jemsheena M A</h3>
                             <p class="text-cyan-400 font-semibold">Faculty Coordinator</p>
                             <a href="tel:+917025071483" class="inline-block mt-4 bg-gray-700 text-white px-4 py-2 rounded-full hover:bg-cyan-600 transition duration-300">
@@ -523,7 +514,7 @@
                         </div>
                          <!-- Coordinator Card 4 -->
                         <div class="bg-slate-900/80 backdrop-blur-sm p-6 rounded-lg shadow-lg shadow-indigo-500/10 text-center transform hover:scale-105 transition-transform duration-300 border border-cyan-500/30">
-                            <img class="w-32 h-32 rounded-full mx-auto border-4 border-indigo-500" src="../media/student_coordinator1.jpeg" alt="Coordinator Amal Raj">
+                            <img class="w-32 h-32 rounded-full mx-auto border-4 border-indigo-500" src="./media/student_coordinator1.jpeg" alt="Coordinator Amal Raj">
                             <h3 class="text-2xl font-bold text-white mt-4">Amal Raj</h3>
                             <p class="text-indigo-400 font-semibold">Student Coordinator</p>
                             <a href="tel:+919495739019" class="inline-block mt-4 bg-gray-700 text-white px-4 py-2 rounded-full hover:bg-indigo-600 transition duration-300">
@@ -532,7 +523,7 @@
                         </div>
                          <!-- Coordinator Card 5 -->
                         <div class="bg-slate-900/80 backdrop-blur-sm p-6 rounded-lg shadow-lg shadow-fuchsia-500/10 text-center transform hover:scale-105 transition-transform duration-300 border border-cyan-500/30">
-                            <img class="w-32 h-32 rounded-full mx-auto border-4 border-fuchsia-500" src="../media/student_coordinator2.jpeg" alt="Coordinator Saneera Rasheed">
+                            <img class="w-32 h-32 rounded-full mx-auto border-4 border-fuchsia-500" src="./media/student_coordinator2.jpeg" alt="Coordinator Saneera Rasheed">
                             <h3 class="text-2xl font-bold text-white mt-4">Saneera Rasheed</h3>
                             <p class="text-fuchsia-400 font-semibold">Student Coordinator</p>
                             <a href="tel:+919778066796" class="inline-block mt-4 bg-gray-700 text-white px-4 py-2 rounded-full hover:bg-fuchsia-600 transition duration-300">
@@ -591,12 +582,79 @@
                 </div>
             </section>
         </main>
+        
+        <section id="about" class="py-16 sm:py-24 bg-gray-950 relative overflow-hidden">
+             <h2 class="text-3xl sm:text-4xl font-extrabold text-center text-white mb-8">
+                       About AIMAT
+                    </h2>
+                
+                <div class="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 bg-indigo-900/30 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 bg-fuchsia-900/20 rounded-full blur-3xl pointer-events-none"></div>
+
+                <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                        
+                        <div class="text-left">
+                            <div class="inline-block px-4 py-1 mb-4 rounded-full border border-yellow-500/50 bg-yellow-500/10 backdrop-blur-md">
+                                <span class="text-yellow-400 font-bold uppercase tracking-widest text-xs">Silver Jubilee Celebration</span>
+                            </div>
+                            
+                            <h2 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white mb-6 leading-tight">
+                                25 Years of <br>
+                                <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-cyan-400">Excellence & Innovation</span>
+                            </h2>
+                            
+                            <p class="text-gray-300 text-lg mb-6 leading-relaxed">
+                                Since its inception, <strong>MES AIMAT</strong> has stood as a beacon of higher learning in Marampally. For a quarter of a century, we have been shaping the minds of future leaders in Technology and Management.
+                            </p>
+                            
+                            <p class="text-gray-400 mb-8">
+                                As we celebrate our <strong>25th Anniversary</strong>, Awega25 serves not just as a tech fest, but as a tribute to our legacy. From humble beginnings to becoming a premier institute in Kerala, our journey has been fueled by a passion for knowledge and a commitment to society.
+                            </p>
+
+                            <div class="grid grid-cols-3 gap-4 border-t border-gray-800 pt-8">
+                                <div>
+                                    <span class="block text-3xl font-bold text-white">25+</span>
+                                    <span class="text-sm text-gray-500 uppercase">Years Legacy</span>
+                                </div>
+                                <div>
+                                    <span class="block text-3xl font-bold text-white">1000+</span>
+                                    <span class="text-sm text-gray-500 uppercase">Alumni</span>
+                                </div>
+                                <div>
+                                    <span class="block text-3xl font-bold text-white">100%</span>
+                                    <span class="text-sm text-gray-500 uppercase">Dedication</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="relative">
+                            <div class="absolute -inset-4 bg-gradient-to-r from-fuchsia-600 to-indigo-600 rounded-xl blur-lg opacity-50"></div>
+                            
+                            <div class="relative rounded-xl overflow-hidden shadow-2xl border border-gray-700 bg-gray-900 group">
+                                <img src="./media/image.png" 
+                                     onerror="this.src='https://placehold.co/800x600/1e1b4b/ffffff?text=MES+AIMAT+Campus'" 
+                                     alt="MES AIMAT Campus" 
+                                     class="w-full h-auto object-cover transform group-hover:scale-105 transition duration-700 ease-out">
+                                
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+                                
+                                <div class="absolute bottom-4 left-4">
+                                    <p class="text-white font-semibold">Established 2000</p>
+                                    <p class="text-xs text-gray-400">Marampally, Aluva</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
 
         <!-- Footer -->
         <footer class="bg-gray-950 border-t border-gray-800">
             <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12 text-center text-gray-400">
                <div class="flex justify-center items-center mb-0">
-               <img src="../media/aimat_logo.png" alt="" class="w-32 h-32">
+               <img src="./media/aimat_logo.png" alt="" class="w-32 h-32">
                </div>
 
                 
@@ -616,57 +674,16 @@
                     <a href="https://www.instagram.com/_aswi._n?igsh=Z2ZoN2xjNGE4OGxv" target="_blank" rel="noopener noreferrer" class="font-semibold text-fuchsia-400 hover:underline">Aswin</a> 
                     & 
                     <a href="https://www.instagram.com/__.r.i.z.w.a.n.__?igsh=MTF3cXBsNDNwdmQ0aQ==" target="_blank" rel="noopener noreferrer" class="font-semibold text-cyan-400 hover:underline">Rizwan</a>
-dc2
-0/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
-                Back to Awega25
-            </button>
-
-            <h1 class="text-3xl sm:text-5xl font-extrabold text-center text-white mb-12">
-                Awega '24 Full Gallery
-            </h1>
-
-            <!-- Video Section -->
-            <div class="mb-16 text-center">
-                <h3 class="text-2xl sm:text-3xl font-bold text-white mb-6">Awega '24 Aftermovie</h3>
-                <div class="max-w-3xl mx-auto rounded-lg overflow-hidden shadow-xl">
-                    <div class="aspect-w-16 aspect-h-9 bg-gray-800 flex items-center justify-center">
-                         <!-- TODO: Replace this placeholder YouTube link with your 'Awega '24 Aftermovie' URL. -->
-                        <iframe class="w-full h-full" style="aspect-ratio: 16/9;" src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Full Image Grid -->
-            <h3 class="text-2xl sm:text-3xl font-bold text-white mb-6 text-center">Photo Gallery</h3>
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div class="grid gap-4">
-                    <div><img class="h-auto max-w-full rounded-lg shadow-lg hover:scale-105 transition-transform duration-300" src="https://placehold.co/600x400/4f46e5/ffffff?text=Crowd+Shot" alt="Event crowd"></div>
-                    <div><img class="h-auto max-w-full rounded-lg shadow-lg hover:scale-105 transition-transform duration-300" src="https://placehold.co/600x800/a855f7/ffffff?text=Dance+Perf." alt="Dance performance"></div>
-                    <div><img class="h-auto max-w-full rounded-lg shadow-lg hover:scale-105 transition-transform duration-300" src="https://placehold.co/600x400/4f46e5/ffffff?text=Tech+Event" alt="Tech event"></div>
-                </div>
-                <div class="grid gap-4">
-                    <div><img class="h-auto max-w-full rounded-lg shadow-lg hover:scale-105 transition-transform duration-300" src="https://placehold.co/600x800/a855f7/ffffff?text=Guest+Speech" alt="Guest speech"></div>
-                    <div><img class="h-auto max-w-full rounded-lg shadow-lg hover:scale-105 transition-transform duration-300" src="https://placehold.co/600x400/4f46e5/ffffff?text=Music+Band" alt="Music band"></div>
-                    <div><img class="h-auto max-w-full rounded-lg shadow-lg hover:scale-105 transition-transform duration-300" src="https://placehold.co/600x400/a855f7/ffffff?text=Robo+Wars" alt="Robotics event"></div>
-                </div>
-                <div class="grid gap-4">
-                    <div><img class="h-auto max-w-full rounded-lg shadow-lg hover:scale-105 transition-transform duration-300" src="https://placehold.co/600x400/4f46e5/ffffff?text=Art+Install" alt="Art installation"></div>
-                    <div><img class="h-auto max-w-full rounded-lg shadow-lg hover:scale-105 transition-transform duration-300" src="https://placehold.co/600x800/a855f7/ffffff?text=Fashion+Show" alt="Fashion show"></div>
-                    <div><img class="h-auto max-w-full rounded-lg shadow-lg hover:scale-105 transition-transform duration-300" src="https://placehold.co/600x400/4f46e5/ffffff?text=Winners" alt="Event winners"></div>
-                </div>
-                <div class="grid gap-4">
-                    <div> <img class="h-auto max-w-full rounded-lg shadow-lg hover:scale-105 transition-transform duration-300" src="https://placehold.co/600x400/a855f7/ffffff?text=Food+Stalls" alt="Food stalls"> </div>
-                </div>
 
             </div>
-        </div>
+        </footer>
     </div>
 
     <!-- 
       NOTE: Replaced local audio file with a royalty-free track from Pixabay for live preview. 
       You can replace this src with your own hosted audio file.
     -->
-    <audio id="theme-audio" loop src="../media/song.mp3"></audio>
+    <audio id="theme-audio" loop src="./media/song.mp3"></audio>
 
     <!-- JavaScript -->
     <script>
@@ -682,26 +699,7 @@ dc2
             const backToMainBtn = document.getElementById('back-to-main');
             const navLinks = document.querySelectorAll('header a[href^="#"]');
 
-            function showGallery() {
-                mainContent.classList.add('hidden');
-                galleryPage.classList.remove('hidden');
-                window.scrollTo(0, 0);
-            }
-
-            function showMain() {
-                mainContent.classList.remove('hidden');
-                galleryPage.classList.add('hidden');
-                document.getElementById('gallery').scrollIntoView({ behavior: 'auto' });
-            }
-
-            openGalleryLinks.forEach(link => link.addEventListener('click', (e) => {
-                e.preventDefault();
-                showGallery();
-            }));
-
-            if (backToMainBtn) {
-                backToMainBtn.addEventListener('click', showMain);
-            }
+    
             
             // --- Nav Link Smooth Scroll & Page-Switch Logic ---
             navLinks.forEach(anchor => {
