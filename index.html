@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Awega25 | MES AIMAT</title>
+    
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts - Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Apply the Inter font family */
+        body {
+            font-family: 'Inter', sans-serif;
+            /* Light mode default (now applied in body tag) */
+        }
+
+        /* Dark mode styles (now applied in body tag) */
+        /* .dark body { ... removed ... } */
+
+        /* Animated Starfield Background */
+        .starfield {
+            background-color: #000;
+            background-image:
+                radial-gradient(1px 1px at 20px 30px, white, rgba(255,255,255,0)),
+                radial-gradient(1px 1px at 40px 70px, white, rgba(255,255,255,0)),
+                radial-gradient(1px 1px at 80px 120px, white, rgba(255,255,255,0)),
+                radial-gradient(2px 2px at 160px 240px, white, rgba(255,255,255,0)),
+                radial-gradient(1px 1px at 90px 40px, white, rgba(255,255,255,0)),
+                radial-gradient(1px 1px at 130px 200px, white, rgba(255,255,255,0)),
+                radial-gradient(1px 1px at 180px 50px, white, rgba(255,255,255,0));
+            animation: pan-starfield 180s linear infinite;
+            background-size: 250px 250px;
+            background-repeat: repeat;
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            z-index: 0;
+        }
+
+        @keyframes pan-starfield {
+            from { background-position: 0% 0%; }
+            to { background-position: 0% 2000%; }
+        }
+
+        /* Nebula Blobs for Hero */
+        .nebula-blob {
+            position: absolute;
+            border-radius: 9999px;
+            opacity: 0.5; /* Set dark mode opacity as default */
+            filter: blur(80px); /* 5rem blur */
+            pointer-events: none;
+        }
+        
+        /* .dark .nebula-blob { ... removed ... } */
+
+        /* Custom gradient text */
+        .gradient-text {
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            background-image: linear-gradient(to right, #d946ef, #22d3ee); /* fuchsia-500 to cyan-400 */
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background-color: #030712; /* gray-950 */
+        }
+        /* .dark ::-webkit-scrollbar-track { ... removed ... } */
+        ::-webkit-scrollbar-thumb {
+            background-color: #4f46e5; /* indigo-600 */
+            border-radius: 6px; /* rounded-md */
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background-color: #6366f1; /* indigo-500 */
+        }
+
+        /* --- Interstellar Planets, Stars & Satellites --- */
+        .planets-container {
+            position: absolute;
+            inset: 0;
+            z-index: 1; /* Sits between starfield (0) and text (10) */
+            overflow: hidden;
+            pointer-events: none; /* Non-interactive */
+        }
+
+        .planet {
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+        }
+
+        .moon {
+            width: 40px;
+            height: 40px;
+            background: radial-gradient(circle, #f0f0f0, #b0b0b0);
+            box-shadow: 0 0 20px #ffffff;
+            top: 25%;
+            left: 10%;
+            animation: float-up-down 10s ease-in-out infinite;
+        }
+
+        .saturn {
+            width: 70px;
+            height: 70px;
+            background: radial-gradient(circle, #f0e68c, #d2b48c);
+            box-shadow: 0 0 40px #f0e68c;
+            top: 60%;
+            right: 15%;
+            animation: float-left-right 15s ease-in-out infinite;
+        }
+
+        /* The ring for Saturn */
+        .saturn::after {
+            content: '';
+            position: absolute;
+            left: -40%;
+            top: 50%;
+            width: 180%;
+            height: 15px;
+            background: rgba(210, 180, 140, 0.7);
+            border-radius: 50%;
+            transform: translateY(-50%) rotate(-25deg);
+            z-index: -1; /* Sits behind the planet body */
+            box-shadow: 0 0 15px rgba(210, 180, 140, 0.5);
+        }
+
+        .jupiter-like {
+            width: 25px;
+            height: 25px;
+            background: radial-gradient(circle, #e67e22, #c0392b);
+            top: 15%;
+            right: 40%;
+            animation: float-up-down 8s ease-in-out infinite reverse; /* Moves opposite to moon */
+        }
+
+        @keyframes float-up-down {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0); }
+        }
+        
+        @keyframes float-left-right {
+            0% { transform: translateX(0); }
+            50% { transform: translateX(20px); }
+            100% { transform: translateX(0); }
+        }
+        /* --- End: Interstellar Planets --- */
+
+        /* --- Traveling Satellite --- */
+        .satellite {
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            background: #b0bec5; /* Satellite body */
+            border-radius: 3px;
+            animation: travel-satellite 20s linear infinite;
+            opacity: 0;
+            box-shadow: 0 0 8px #eceff1;
+        }
+
+        .satellite::before,
+        .satellite::after {
+            content: '';
+            position: absolute;
+            width: 30px;
+            height: 8px;
+            background: #263238; /* Solar panels */
+            border: 1px solid #546e7a;
+            border-radius: 2px;
+        }
+        
+        .satellite::before {
+            top: 3px;
+            left: -35px;
+            transform: rotate(-30deg);
+        }
+
+        .satellite::after {
+            top: 3px;
+            right: -35px;
+            transform: rotate(30deg);
+        }
+
+        @keyframes travel-satellite {
+            0% {
+                transform: translate(-100px, -100px) rotate(45deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translate(100vw, 100vh) rotate(45deg);
+                opacity: 0;
+            }
+        }
+        
+        /* --- Shooting Stars --- */
+        .shooting-star {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 2px;
+            height: 2px;
+            background: #fff;
+            border-radius: 50%;
+            box-shadow: 0 0 6px #fff, 0 0 10px #fff;
+            opacity: 0;
+            animation: shoot 5s linear infinite;
+        }
+
+        .shooting-star::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(315deg); /* Angle of the tail */
+            width: 200px; /* Tail length */
+            height: 1px;
+            background: linear-gradient(to left, transparent, #fff);
+            transform-origin: right;
+        }
+        
+        @keyframes shoot {
+            0% {
+                opacity: 0;
+                transform: translate(100vw, -100px) scale(0.5);
+            }
+            10% {
+                opacity: 1;
+            }
+            70% {
+                opacity: 1;
+            }
+            80% {
+                opacity: 0;
+                transform: translate(-100px, 80vw) scale(1.2);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(-100px, 80vw) scale(1.2);
+            }
+        }
+
+        /* Stagger the stars (Adjusted to middle) */
+        .shooting-star:nth-child(4) { /* nth-child(1-3) are planets */
+            top: 40%;
+            left: 50%;
+            animation-delay: 1.5s;
+        }
+        .shooting-star:nth-child(5) {
+            top: 50%;
+            left: 40%;
+            animation-delay: 3.5s;
+        }
+        .shooting-star:nth-child(6) {
+            top: 60%;
+            left: 30%;
+            animation-delay: 5.5s;
+        }
+
+    </style>
+</head>
+<body class="transition-colors duration-300 bg-black text-gray-200">
+
+    <!-- 
+      This wrapper holds all main page content. 
+      It will be hidden when the gallery page is shown.
+    -->
+    <div id="main-content">
+
+        <!-- Header -->
+        <header class="bg-black/70 backdrop-blur-sm sticky top-0 z-50 shadow-md shadow-indigo-500/10">
+            <nav class="container mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center py-4">
+                <!-- Logo and College Name -->
+                <a href="#home" class="flex items-center space-x-0">
+                    <!-- SVG Logo for 'A25' (Awega25) -->
+                    <svg width="40" height="40" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <circle cx="50" cy="50" r="50" fill="url(#logoGrad)"/>
+                      <img src="../media/awega_logo.png" alt="" height="50px" width="50px">
+                      <defs>
+                        <linearGradient id="logoGrad" x1="0" y1="0" x2="100" y2="100">
+                          <stop offset="0%" style="stop-color:#4f46e5;stop-opacity:1" /> <!-- indigo-600 -->
+                          <stop offset="100%" style="stop-color:#a855f7;stop-opacity:1" /> <!-- purple-500 -->
+                        </linearGradient>
+                      </defs>
+                    </svg>
+                    <span class="text-xl font-bold text-white hidden sm:block">
+                        AWEGA
+                    </span>
+                </a>
+                
+                <!-- Navigation Links (for larger screens) -->
+                <div class="hidden md:flex items-center space-x-4 lg:space-x-6">
+                    <a href="#home" class="text-gray-300 hover:text-white transition duration-300">Home</a>
+                    <a href="#live" class="text-gray-300 hover:text-white transition duration-300">Schedule</a>
+                    <a href="#gallery" class="text-gray-300 hover:text-white transition duration-300">Gallery</a>
+                    <a href="#contact" class="text-gray-300 hover:text-white transition duration-300">Contact</a>
+                    
+                    <!-- Theme Toggle Button Removed -->
+
+                    <a href="#register" class="bg-indigo-600 hover:bg-indigo-500 text-white font-semibold px-5 py-2 rounded-full transition duration-300 shadow-md">
+                        Slot Booking
+                    </a>
+                </div>
+                
+                <!-- Mobile Menu Button & Links -->
+                <div class="md:hidden flex items-center space-x-2">
+                     <!-- Mobile Theme Toggle Button Removed -->
+                    <a href="#register" class="bg-indigo-600 hover:bg-indigo-500 text-white font-semibold px-4 py-2 rounded-full text-sm transition duration-300 shadow-md">
+                         Slot Booking
+                    </a>
+                </div>
+            </nav>
+        </header>
+
+        <main>
+            <!-- Hero Section -->
+            <section id="home" class="min-h-screen flex items-center justify-center text-center relative overflow-hidden px-4 isolate">
+                <!-- Starfield Background -->
+                <div class="starfield"></div>
+                
+                <!-- Nebula Blobs -->
+                <div class="nebula-blob -bottom-1/4 -left-1/4 w-96 h-96 bg-fuchsia-500"></div>
+                <div class="nebula-blob -top-1/4 -right-1/4 w-96 h-96 bg-cyan-500"></div>
+
+                <!-- Moving Planets Container -->
+                <div class="planets-container">
+                    <div class="planet moon"></div>
+                    <div class="planet saturn"></div>
+                    <div class="planet jupiter-like"></div>
+                    <!-- Shooting Stars -->
+                    <div class="shooting-star"></div>
+                    <div class="shooting-star"></div>
+                    <div class="shooting-star"></div>
+                    <!-- Traveling Satellite -->
+                    <div class="satellite"></div>
+                </div>
+
+                <div class="relative z-10">
+                    <h1 class="text-6xl sm:text-7xl md:text-8xl font-extrabold text-white tracking-tighter mb-4" style="text-shadow: 0 0 30px rgba(255,255,255,0.5);">
+                        Awega25
+                    </h1>
+                    <p class="text-xl sm:text-2xl md:text-3xl font-light text-indigo-200 mb-8 max-w-3xl mx-auto">
+                        This year's theme: <span class="font-bold gradient-text">INTERSTELLAR</span>.
+                        The Annual Fest of MES AIMAT is back!
+                    </p>
+                    <a href="#register" class="bg-white text-indigo-700 font-bold px-8 py-3 rounded-full text-lg uppercase tracking-wide hover:bg-gray-200 transition duration-300 shadow-xl">
+                        Book Your Slot
+                    </a>
+                </div>
+            </section>
+
+            <!-- 
+                --- NEW: LIVE VIDEO SECTION ---
+                Added this section to show the currently live event.
+            -->
+            <section id="live-now" class="py-16 sm:py-24 bg-gray-900 text-white">
+                <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                    <!-- Badge and Title -->
+                    <div class="flex items-center justify-center space-x-3 mb-4">
+                        <span class="relative flex h-3 w-3">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
+                        </span>
+                        <h3 class="text-2xl font-bold text-white-500 dark:text-white-400 uppercase tracking-wider">LIVE NOW</h3>
+                    </div>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-center text-white mb-8">
+                        Cultural Night & Band
+                    </h2>
+                    
+                    <!-- Video Player -->
+                    <div class="max-w-4xl mx-auto bg-black rounded-lg shadow-2xl overflow-hidden border-2 border-red-500/50">
+                        <!-- 
+                            TODO: Replace this placeholder YouTube link with your actual live stream embed URL.
+                        -->
+                        <iframe class="w-full h-full" style="aspect-ratio: 16/9;" src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&mute=1" title="Live Event Stream" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </section>
+            <!-- --- END: LIVE VIDEO SECTION --- -->
+
+
+            <!-- Live Forecast / Schedule Section -->
+            <section id="live" class="py-16 sm:py-24 bg-gray-950">
+                <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-center text-white mb-6">
+                        Full Event Schedule
+                    </h2>
+                    <p class="text-center text-lg text-gray-400 mb-12">Filter the schedule to plan your journey.</p>
+                    
+                    <!-- Filter Buttons -->
+                    <div class="flex flex-wrap justify-center gap-4 mb-12">
+                        <button class="schedule-filter-btn bg-fuchsia-600 text-white font-semibold px-5 py-2 rounded-full transition duration-300" data-filter="all">All</button>
+                        <button class="schedule-filter-btn bg-gray-800 text-gray-300 hover:bg-gray-700 font-semibold px-5 py-2 rounded-full transition duration-300" data-filter="technical">Technical</button>
+                        <button class="schedule-filter-btn bg-gray-800 text-gray-300 hover:bg-gray-700 font-semibold px-5 py-2 rounded-full transition duration-300" data-filter="cultural">Cultural</button>
+                        <button class="schedule-filter-btn bg-gray-800 text-gray-300 hover:bg-gray-700 font-semibold px-5 py-2 rounded-full transition duration-300" data-filter="workshop">Workshops</button>
+                    </div>
+
+                    <div class="max-w-4xl mx-auto">
+                        <!-- Timeline-like structure -->
+                        <div class="relative border-l-2 border-indigo-700 pl-8 space-y-12">
+                            <!-- Timeline Item 1 -->
+                            <div class="schedule-item" data-category="all">
+                                <div class="relative">
+                                    <span class="absolute -left-[42px] top-1 h-4 w-4 bg-indigo-500 rounded-full ring-8 ring-gray-950"></span>
+                                    <span class="text-sm font-semibold text-indigo-400 uppercase">9:00 AM - 10:00 AM</span>
+                                    <h3 class="text-2xl font-bold text-white mt-1">Inauguration</h3>
+                                    <p class="text-gray-300 mt-2">Grand opening ceremony at the AIMAT. Chief guest address and lamp lighting.</p>
+                                </div>
+                            </div>
+                            <!-- Timeline Item 2 -->
+                            <div class="schedule-item" data-category="technical">
+                                <div class="relative">
+                                    <span class="absolute -left-[42px] top-1 h-4 w-4 bg-indigo-500 rounded-full ring-8 ring-gray-950"></span>
+                                    <span class="text-sm font-semibold text-indigo-400 uppercase">10:30 AM - 1:00 PM</span>
+                                    <h3 class="text-2xl font-bold text-white mt-1">Tech Talk: AI & The Future</h3>
+                                    <p class="text-gray-300 mt-2">Deep dive into AI with industry expert Dr. Anna Philip. (Seminar Hall A)</p>
+                                </div>
+                            </div>
+                            <!-- Timeline Item 3 -->
+                            <div class="schedule-item" data-category="workshop">
+                                <div class="relative">
+                                    <span class="absolute -left-[42px] top-1 h-4 w-4 bg-indigo-500 rounded-full ring-8 ring-gray-950"></span>
+                                    <span class="text-sm font-semibold text-indigo-400 uppercase">1:00 PM - 3:00 PM</span>
+                                    <h3 class="text-2xl font-bold text-white mt-1">Robotics Workshop</h3>
+                                    <p class="text-gray-300 mt-2">Hands-on session on building and programming line-follower robots. (Mech Lab)</p>
+                                </div>
+                            </div>
+                            <!-- Timeline Item 4 -->
+                            <div class="schedule-item" data-category="technical">
+                                <div class="relative">
+                                    <span class="absolute -left-[42px] top-1 h-4 w-4 bg-indigo-500 rounded-full ring-8 ring-gray-950"></span>
+                                    <span class="text-sm font-semibold text-indigo-400 uppercase">2:00 PM - 4:00 PM</span>
+                                    <h3 class="text-2xl font-bold text-white mt-1">CodeFest Finals</h3>
+                                    <p class="text-gray-300 mt-2">Watch the final teams battle it out in the live coding competition. (CS Lab 1)</p>
+                                </div>
+                            </div>
+                            <!-- Timeline Item 5 -->
+                            <div class="schedule-item" data-category="cultural">
+                                <div class="relative">
+                                    <span class="absolute -left-[42px] top-1 h-4 w-4 bg-indigo-500 rounded-full ring-8 ring-gray-950"></span>
+                                    <span class="text-sm font-semibold text-indigo-400 uppercase">6:00 PM Onwards</span>
+                                    <h3 class="text-2xl font-bold text-white mt-1">Cultural Night & DJ</h3>
+                                    <p class="text-gray-300 mt-2">Music, dance, and celebration at the main ground. Don't miss the DJ set!</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Previous Events Gallery (Teaser) -->
+            <section id="gallery" class="py-16 sm:py-24 bg-black">
+                <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-center text-white mb-6">
+                        Glimpses of Awega '24
+                    </h2>
+                    <p class="text-center text-lg text-gray-400 mb-12 max-w-2xl mx-auto">A look back at the moments that made last year unforgettable. Click to see the full gallery.</p>
+                    
+                    <!-- Teaser Image Grid -->
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <img class="h-auto max-w-full rounded-lg shadow-lg hover:scale-105 transition-transform duration-300 cursor-pointer open-gallery-link" src="https://placehold.co/600x400/4f46e5/ffffff?text=Crowd+Shot" alt="Event crowd">
+                        <img class="h-auto max-w-full rounded-lg shadow-lg hover:scale-105 transition-transform duration-300 cursor-pointer open-gallery-link" src="https://placehold.co/600x400/a855f7/ffffff?text=Dance+Perf." alt="Dance performance">
+                        <img class="h-auto max-w-full rounded-lg shadow-lg hover:scale-105 transition-transform duration-300 cursor-pointer open-gallery-link" src="https://placehold.co/600x400/4f46e5/ffffff?text=Tech+Event" alt="Tech event">
+                        <img class="h-auto max-w-full rounded-lg shadow-lg hover:scale-105 transition-transform duration-300 cursor-pointer open-gallery-link" src="https://placehold.co/600x400/a855f7/ffffff?text=Music+Band" alt="Music band">
+                    </div>
+
+                    <div class="text-center mt-12">
+                        <button class="open-gallery-link bg-indigo-600 hover:bg-indigo-500 text-white font-semibold px-8 py-3 rounded-full text-lg transition duration-300 shadow-md">
+                            View Full Gallery
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Event Coordinators -->
+            <section id="contact" class="py-16 sm:py-24 bg-gray-950">
+                <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-center text-white mb-12">
+                        Meet The Coordinators
+                    </h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                         <!-- Coordinator Card 1 -->
+                        <div class="bg-slate-900/80 backdrop-blur-sm p-6 rounded-lg shadow-lg shadow-fuchsia-500/10 text-center transform hover:scale-105 transition-transform duration-300 border border-fuchsia-500/30">
+                            <img class="w-32 h-32 rounded-full mx-auto border-4 border-fuchsia-500" src="../media/coordinator1.jpeg" alt="Coordinator Jaseena Abbas">
+                            <h3 class="text-2xl font-bold text-white mt-4">Jaseena Abbas</h3>
+                            <p class="text-fuchsia-400 font-semibold">Faculty Coordinator</p>
+                            <a href="tel:+919633579544" class="inline-block mt-4 bg-gray-700 text-white px-4 py-2 rounded-full hover:bg-fuchsia-600 transition duration-300">
+                                +91 96335 79544
+                            </a>
+                        </div>
+                        <!-- Coordinator Card 2 -->
+                        <div class="bg-slate-900/80 backdrop-blur-sm p-6 rounded-lg shadow-lg shadow-indigo-500/10 text-center transform hover:scale-105 transition-transform duration-300 border border-indigo-500/30">
+                            <img class="w-32 h-32 rounded-full mx-auto border-4 border-indigo-500" src="../media/coordinator2.jpeg" alt="Coordinator Shahila Shahul">
+                            <h3 class="text-2xl font-bold text-white mt-4">Shahila Shahul</h3>
+                            <p class="text-indigo-400 font-semibold">Faculty Coordinator</p>
+                            <a href="tel:+919747901710" class="inline-block mt-4 bg-gray-700 text-white px-4 py-2 rounded-full hover:bg-indigo-600 transition duration-300">
+                                +91 97479 01710
+                            </a>
+                        </div>
+                
+                        <!-- Coordinator Card 3 -->
+                        <div class="bg-slate-900/80 backdrop-blur-sm p-6 rounded-lg shadow-lg shadow-cyan-500/10 text-center transform hover:scale-105 transition-transform duration-300 border border-cyan-500/30">
+                            <img class="w-32 h-32 rounded-full mx-auto border-4 border-cyan-500" src="https://placehold.co/150x150/555/fff?text=Jemsheena" alt="Coordinator Jemsheena M A">
+                            <h3 class="text-2xl font-bold text-white mt-4">Jemsheena M A</h3>
+                            <p class="text-cyan-400 font-semibold">Faculty Coordinator</p>
+                            <a href="tel:+917025071483" class="inline-block mt-4 bg-gray-700 text-white px-4 py-2 rounded-full hover:bg-cyan-600 transition duration-300">
+                                +91 70250 71483
+                            </a>
+                        </div>
+                         <!-- Coordinator Card 4 -->
+                        <div class="bg-slate-900/80 backdrop-blur-sm p-6 rounded-lg shadow-lg shadow-indigo-500/10 text-center transform hover:scale-105 transition-transform duration-300 border border-cyan-500/30">
+                            <img class="w-32 h-32 rounded-full mx-auto border-4 border-indigo-500" src="../media/student_coordinator1.jpeg" alt="Coordinator Amal Raj">
+                            <h3 class="text-2xl font-bold text-white mt-4">Amal Raj</h3>
+                            <p class="text-indigo-400 font-semibold">Student Coordinator</p>
+                            <a href="tel:+919495739019" class="inline-block mt-4 bg-gray-700 text-white px-4 py-2 rounded-full hover:bg-indigo-600 transition duration-300">
+                                +91 94957 39019
+                            </a>
+                        </div>
+                         <!-- Coordinator Card 5 -->
+                        <div class="bg-slate-900/80 backdrop-blur-sm p-6 rounded-lg shadow-lg shadow-fuchsia-500/10 text-center transform hover:scale-105 transition-transform duration-300 border border-cyan-500/30">
+                            <img class="w-32 h-32 rounded-full mx-auto border-4 border-fuchsia-500" src="../media/student_coordinator2.jpeg" alt="Coordinator Saneera Rasheed">
+                            <h3 class="text-2xl font-bold text-white mt-4">Saneera Rasheed</h3>
+                            <p class="text-fuchsia-400 font-semibold">Student Coordinator</p>
+                            <a href="tel:+919778066796" class="inline-block mt-4 bg-gray-700 text-white px-4 py-2 rounded-full hover:bg-fuchsia-600 transition duration-300">
+                                +91 97780 66796
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Google Forms Registration -->
+            <section id="register" class="py-16 sm:py-24 bg-black">
+                <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-center text-white mb-6">
+                        Book Your Slot!
+                    </h2>
+                    <p class="text-center text-lg text-gray-300 max-w-2xl mx-auto mb-12">
+                        Register for individual events, workshops, and competitions. Select an event to see its form.
+                    </p>
+                    
+                    <!-- Tabbed Interface -->
+                    <div class="max-w-4xl mx-auto">
+                        <!-- Tab Buttons -->
+                        <div class="flex flex-wrap border-b border-gray-700 mb-4">
+                            <button class="reg-tab bg-indigo-600 text-white px-4 py-3 sm:px-6 sm:py-3 font-semibold rounded-t-lg" data-target="panel-codefest">CodeFest</button>
+                            <button class="reg-tab px-4 py-3 sm:px-6 sm:py-3 font-semibold text-gray-400 hover:text-indigo-400" data-target="panel-robotics">Robotics</button>
+                            <button class="reg-tab px-4 py-3 sm:px-6 sm:py-3 font-semibold text-gray-400 hover:text-indigo-400" data-target="panel-cultural">Cultural</button>
+                            <button class="reg-tab px-4 py-3 sm:px-6 sm:py-3 font-semibold text-gray-400 hover:text-indigo-400" data-target="panel-gaming">Gaming</button>
+
+                        </div>
+                        
+                        <!-- Tab Panels -->
+                        <div class="bg-gray-900 rounded-lg shadow-2xl overflow-hidden">
+                            <!-- Panel 1: CodeFest -->
+                            <div id="panel-codefest" class="reg-panel">
+                                <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfwYx-01-jS8s-tyIro8mRWeoXFz0-3-g-GvS-Bq3-4f_z-7A/viewform?embedded=true" 
+                                    width="100%" height="800" frameborder="0" marginheight="0" marginwidth="0">Loading CodeFest Form…</iframe>
+                            </div>
+                            <!-- Panel 2: Robotics (Hidden) -->
+                            <div id="panel-robotics" class="reg-panel hidden">
+                                <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfwYx-01-jS8s-tyIro8mRWeoXFz0-3-g-GvS-Bq3-4f_z-7A/viewform?embedded=true" 
+                                    width="100%" height="800" frameborder="0" marginheight="0" marginwidth="0">Loading Robotics Form…</iframe>
+                            </div>
+                            <!-- Panel 3: Cultural (Hidden) -->
+                            <div id="panel-cultural" class="reg-panel hidden">
+                                <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfwYx-01-jS8s-tyIro8mRWeoXFz0-3-g-GvS-Bq3-4f_z-7A/viewform?embedded=true" 
+                                    width="100%" height="800" frameborder="0" marginheight="0" marginwidth="0">Loading Cultural Events Form…</iframe>
+                            </div>
+                            <!-- Panel 4: Gaming (Hidden) -->
+                            <div id="panel-gaming" class="reg-panel hidden">
+                                <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfwYx-01-jS8s-tyIro8mRWeoXFz0-3-g-GvS-Bq3-4f_z-7A/viewform?embedded=true" 
+                                    width="100%" height="800" frameborder="0" marginheight="0" marginwidth="0">Loading Gaming Form…</iframe>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="bg-gray-950 border-t border-gray-800">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12 text-center text-gray-400">
+               <div class="flex justify-center items-center mb-0">
+               <img src="../media/aimat_logo.png" alt="" class="w-32 h-32">
+               </div>
+
+                
+                <p class="text-lg font-semibold text-gray-200 mb-6">MES Advanced Institute of Management and Technology</p>
+                <p class="mb-6">Marampally, Aluva, Ernakulam, Kerala - 683107</p>
+                
+                <!-- Social Media Icons -->
+                <div class="flex justify-center space-x-6 mb-8">
+                    <!-- ... Social media SVG icons ... -->
+                    <a href="#" class="text-gray-400 hover:text-white" aria-label="Instagram"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.148 3.227-1.669 4.771-4.919 4.919-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-3.252-.148-4.771-1.691-4.919-4.919-.058-1.265-.07-1.646-.07-4.85s.012-3.584.07-4.85c.148-3.227 1.669 4.771 4.919-4.919C8.416 2.175 8.796 2.163 12 2.163m0-1.081C8.741 1.082 8.362 1.093 7.098 1.15c-3.63.0166-6.174 2.71-6.34 6.34C1.093 8.762 1.082 9.14 1.082 12s.011 3.238.068 4.502c.166 3.63 2.71 6.174 6.34 6.34 1.264.057 1.643.068 4.502.068s3.238-.011 4.502-.068c3.63-.166 6.174-2.71 6.34-6.34.057-1.264.068-1.643.068-4.502s-.011-3.238-.068-4.502c-.166-3.63-2.71-6.174-6.34-6.34-1.264-.057-1.643-.068-4.502-.068H12zM12 7.84A4.16 4.16 0 1012 16.16 4.16 4.16 0 0012 7.84zM12 14.08a2.08 2.08 0 110-4.16 2.08 2.08 0 010 4.16zm6.406-7.046a.96.96 0 100-1.92.96.96 0 000 1.92z"></path></svg></a>
+                    <a href="#" class="text-gray-400 hover:text-white" aria-label="Facebook"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M22.675 0h-21.35C.59 0 0 .59 0 1.325v21.351C0 23.41.59 24 1.325 24H12.82v-9.294H9.692v-3.622h3.128V8.413c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12V24h6.116c.735 0 1.325-.59 1.325-1.325V1.325C24 .59 23.41 0 22.675 0z"></path></svg></a>
+                </div>
+                
+                <p class="mb-4">&copy; 2025 MES AIMAT. All rights reserved. Designed for Awega25.</p>
+                <p>
+                    Developed by 
+                    <a href="https://www.instagram.com/_aswi._n?igsh=Z2ZoN2xjNGE4OGxv" target="_blank" rel="noopener noreferrer" class="font-semibold text-fuchsia-400 hover:underline">Aswin</a> 
+                    & 
+                    <a href="https://www.instagram.com/__.r.i.z.w.a.n.__?igsh=MTF3cXBsNDNwdmQ0aQ==" target="_blank" rel="noopener noreferrer" class="font-semibold text-cyan-400 hover:underline">Rizwan</a>
+                </p>
+            </div>
+        </footer>
+
+    </div> <!-- End #main-content wrapper -->
+
+
+    <!-- 
+      Full Screen Gallery Page (Hidden by default)
+      This simulates a separate page.
+    -->
+    <div id="gallery-page" class="hidden min-h-screen bg-black p-4 sm:p-8">
+        <div class="container mx-auto">
+            <!-- Back Button -->
+            <button id="back-to-main" class="mb-8 inline-flex items-center text-lg font-semibold text-indigo-400 hover:underline">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                Back to Awega25
+            </button>
+
+            <h1 class="text-3xl sm:text-5xl font-extrabold text-center text-white mb-12">
+                Awega '24 Full Gallery
+            </h1>
+
+            <!-- Video Section -->
+            <div class="mb-16 text-center">
+                <h3 class="text-2xl sm:text-3xl font-bold text-white mb-6">Awega '24 Aftermovie</h3>
+                <div class="max-w-3xl mx-auto rounded-lg overflow-hidden shadow-xl">
+                    <div class="aspect-w-16 aspect-h-9 bg-gray-800 flex items-center justify-center">
+                         <!-- TODO: Replace this placeholder YouTube link with your 'Awega '24 Aftermovie' URL. -->
+                        <iframe class="w-full h-full" style="aspect-ratio: 16/9;" src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Full Image Grid -->
+            <h3 class="text-2xl sm:text-3xl font-bold text-white mb-6 text-center">Photo Gallery</h3>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="grid gap-4">
+                    <div><img class="h-auto max-w-full rounded-lg shadow-lg hover:scale-105 transition-transform duration-300" src="https://placehold.co/600x400/4f46e5/ffffff?text=Crowd+Shot" alt="Event crowd"></div>
+                    <div><img class="h-auto max-w-full rounded-lg shadow-lg hover:scale-105 transition-transform duration-300" src="https://placehold.co/600x800/a855f7/ffffff?text=Dance+Perf." alt="Dance performance"></div>
+                    <div><img class="h-auto max-w-full rounded-lg shadow-lg hover:scale-105 transition-transform duration-300" src="https://placehold.co/600x400/4f46e5/ffffff?text=Tech+Event" alt="Tech event"></div>
+                </div>
+                <div class="grid gap-4">
+                    <div><img class="h-auto max-w-full rounded-lg shadow-lg hover:scale-105 transition-transform duration-300" src="https://placehold.co/600x800/a855f7/ffffff?text=Guest+Speech" alt="Guest speech"></div>
+                    <div><img class="h-auto max-w-full rounded-lg shadow-lg hover:scale-105 transition-transform duration-300" src="https://placehold.co/600x400/4f46e5/ffffff?text=Music+Band" alt="Music band"></div>
+                    <div><img class="h-auto max-w-full rounded-lg shadow-lg hover:scale-105 transition-transform duration-300" src="https://placehold.co/600x400/a855f7/ffffff?text=Robo+Wars" alt="Robotics event"></div>
+                </div>
+                <div class="grid gap-4">
+                    <div><img class="h-auto max-w-full rounded-lg shadow-lg hover:scale-105 transition-transform duration-300" src="https://placehold.co/600x400/4f46e5/ffffff?text=Art+Install" alt="Art installation"></div>
+                    <div><img class="h-auto max-w-full rounded-lg shadow-lg hover:scale-105 transition-transform duration-300" src="https://placehold.co/600x800/a855f7/ffffff?text=Fashion+Show" alt="Fashion show"></div>
+                    <div><img class="h-auto max-w-full rounded-lg shadow-lg hover:scale-105 transition-transform duration-300" src="https://placehold.co/600x400/4f46e5/ffffff?text=Winners" alt="Event winners"></div>
+                </div>
+                <div class="grid gap-4">
+                    <div> <img class="h-auto max-w-full rounded-lg shadow-lg hover:scale-105 transition-transform duration-300" src="https://placehold.co/600x400/a855f7/ffffff?text=Food+Stalls" alt="Food stalls"> </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- 
+      NOTE: Replaced local audio file with a royalty-free track from Pixabay for live preview. 
+      You can replace this src with your own hosted audio file.
+    -->
+    <audio id="theme-audio" loop src="../media/song.mp3"></audio>
+
+    <!-- JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // --- Theme Toggle Logic (REMOVED) ---
+
+
+            // --- Page Switching Logic ---
+            const mainContent = document.getElementById('main-content');
+            const galleryPage = document.getElementById('gallery-page');
+            const openGalleryLinks = document.querySelectorAll('.open-gallery-link');
+            const backToMainBtn = document.getElementById('back-to-main');
+            const navLinks = document.querySelectorAll('header a[href^="#"]');
+
+            function showGallery() {
+                mainContent.classList.add('hidden');
+                galleryPage.classList.remove('hidden');
+                window.scrollTo(0, 0);
+            }
+
+            function showMain() {
+                mainContent.classList.remove('hidden');
+                galleryPage.classList.add('hidden');
+                document.getElementById('gallery').scrollIntoView({ behavior: 'auto' });
+            }
+
+            openGalleryLinks.forEach(link => link.addEventListener('click', (e) => {
+                e.preventDefault();
+                showGallery();
+            }));
+
+            if (backToMainBtn) {
+                backToMainBtn.addEventListener('click', showMain);
+            }
+            
+            // --- Nav Link Smooth Scroll & Page-Switch Logic ---
+            navLinks.forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    
+                    /* * Removed special check for nav gallery link. 
+                     * It will now fall through to the normal scroll logic.
+                    if (targetId === '#gallery' && e.currentTarget.classList.contains('open-gallery-link')) {
+                        // If it's the "Gallery" link in the nav, use the page switch logic
+                        showGallery();
+                        return;
+                    }
+                    */
+                    
+                    if (mainContent.classList.contains('hidden')) {
+                        // If on gallery page, first go back to main
+                        showMain();
+                        // Wait for main content to be visible before scrolling
+                        setTimeout(() => {
+                            const targetElement = document.querySelector(targetId);
+                            if (targetElement) {
+                                targetElement.scrollIntoView({ behavior: 'smooth' });
+                            }
+                        }, 50); // Small delay
+                    } else {
+                        // Normal smooth scroll
+                        const targetElement = document.querySelector(targetId);
+                        if (targetElement) {
+                            targetElement.scrollIntoView({ behavior: 'smooth' });
+                        }
+                    }
+                });
+            });
+
+
+            // --- Schedule Filter Logic ---
+            const filterButtons = document.querySelectorAll('.schedule-filter-btn');
+            const scheduleItems = document.querySelectorAll('.schedule-item');
+
+            filterButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const filter = button.dataset.filter;
+
+                    // Update button active state
+                    filterButtons.forEach(btn => {
+                        btn.classList.remove('bg-fuchsia-600', 'text-white');
+                        btn.classList.add('bg-gray-800', 'text-gray-300', 'hover:bg-gray-700');
+                    });
+                    button.classList.add('bg-fuchsia-600', 'text-white');
+                    button.classList.remove('bg-gray-800', 'text-gray-300', 'hover:bg-gray-700');
+
+
+                    // Filter items
+                    scheduleItems.forEach(item => {
+                        if (filter === 'all' || item.dataset.category === filter || item.dataset.category === 'all') {
+                            item.style.display = 'block';
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    });
+                });
+            });
+
+            // --- Registration Tabs Logic ---
+            const regTabs = document.querySelectorAll('.reg-tab');
+            const regPanels = document.querySelectorAll('.reg-panel');
+
+            regTabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const targetPanelId = tab.dataset.target;
+
+                    // Update tab active state
+                    regTabs.forEach(t => {
+                        t.classList.remove('bg-indigo-600', 'text-white');
+                        t.classList.add('text-gray-400', 'hover:text-indigo-400');
+                    });
+                    tab.classList.add('bg-indigo-600', 'text-white');
+                    tab.classList.remove('text-gray-400', 'hover:text-indigo-400');
+
+                    // Show/hide panels
+                    regPanels.forEach(panel => {
+                        if (panel.id === targetPanelId) {
+                            panel.classList.remove('hidden');
+                        } else {
+                            panel.classList.add('hidden');
+                        }
+                    });
+                });
+            });
+            
+            // --- Interstellar Audio (Direct <audio> tag) ---
+            const audio = document.getElementById('theme-audio');
+            let audioStarted = false;
+
+            function startAudio() {
+                if (audioStarted || !audio) return;
+                
+                // Try to play
+                const playPromise = audio.play();
+
+                if (playPromise !== undefined) {
+                    playPromise.then(_ => {
+                        // Playback started successfully!
+                        audioStarted = true;
+                        audio.muted = false; // Ensure it's unmuted
+                        // Remove this listener so we don't try to play on every click
+                        window.removeEventListener('click', startAudio);
+                    }).catch(error => {
+                        // Auto-play was prevented.
+                        // We leave the listener active to try again on the next click.
+                        console.log("Audio playback prevented by browser. Waiting for next user click.");
+                        audioStarted = false;
+                    });
+                }
+            }
+
+            // Mute/unmute based on scroll
+            window.addEventListener('scroll', () => {
+                if (!audioStarted || !audio) return; 
+                
+                const isAtTop = window.scrollY < 100;
+                audio.muted = !isAtTop;
+
+            }, { passive: true });
+
+            // Browsers require user interaction to start audio.
+            // We keep listening for a click until the audio successfully plays.
+            window.addEventListener('click', startAudio);
+
+        });
+    </script>
+
+</body>
+</html>
