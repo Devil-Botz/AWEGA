@@ -276,7 +276,7 @@
                         <button class="schedule-filter-btn bg-gray-800 text-gray-300 hover:bg-gray-700 font-semibold px-5 py-2 rounded-full transition duration-300" data-filter="cultural">Cultural</button>
                         <button class="schedule-filter-btn bg-gray-800 text-gray-300 hover:bg-gray-700 font-semibold px-5 py-2 rounded-full transition duration-300" data-filter="games">Games</button> 
                         <button class="schedule-filter-btn bg-gray-800 text-gray-300 hover:bg-gray-700 font-semibold px-5 py-2 rounded-full transition duration-300" data-filter="aivideo">AI Video</button> 
-                        <button class="schedule-filter-btn bg-gray-800 text-gray-300 hover:bg-gray-700 font-semibold px-5 py-2 rounded-full transition duration-300" data-filter="certicate">Certificate</button> 
+                        <button class="schedule-filter-btn bg-gray-800 text-gray-300 hover:bg-gray-700 font-semibold px-5 py-2 rounded-full transition duration-300" data-filter="prize">Prize Announcement</button> 
                     </div>
 
                     <div class="max-w-4xl mx-auto">
@@ -354,11 +354,11 @@
                                 </div>
                             </div>
 
-                            <div class="schedule-item" data-category="certicate">
+                            <div class="schedule-item" data-category="prize">
                                 <div class="relative">
                                     <span class="absolute -left-[42px] top-1 h-4 w-4 bg-indigo-500 rounded-full ring-8 ring-gray-950"></span>
                                     <span class="text-sm font-semibold text-indigo-400 uppercase">2 PM Onwards</span>
-                                    <h3 class="text-2xl font-bold text-white mt-1">Certicate</h3>
+                                    <h3 class="text-2xl font-bold text-white mt-1">Prize Announcement</h3>
                                     <p class="text-gray-300 mt-2">Venue: AIMAT Stage</p>
                                 </div>
                             </div>
@@ -376,10 +376,10 @@
                     <p class="text-center text-lg text-gray-400 mb-12 max-w-2xl mx-auto">A look back at the moments that made last year unforgettable.</p>
                     
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                        <img class="h-auto max-w-full rounded-lg shadow-lg hover:scale-105 transition-transform duration-300" src="https://placehold.co/600x400/4f46e5/ffffff?text=Crowd+Shot" alt="Event crowd">
-                        <img class="h-auto max-w-full rounded-lg shadow-lg hover:scale-105 transition-transform duration-300" src="https://placehold.co/600x400/a855f7/ffffff?text=Dance+Perf." alt="Dance performance">
-                        <img class="h-auto max-w-full rounded-lg shadow-lg hover:scale-105 transition-transform duration-300" src="https://placehold.co/600x400/4f46e5/ffffff?text=Tech+Event" alt="Tech event">
-                        <img class="h-auto max-w-full rounded-lg shadow-lg hover:scale-105 transition-transform duration-300" src="https://placehold.co/600x400/a855f7/ffffff?text=Music+Band" alt="Music band">
+                        <img class="h-auto max-w-full rounded-lg shadow-lg hover:scale-105 transition-transform duration-300" src="./media/9.JPG" alt="img9">
+                        <img class="h-auto max-w-full rounded-lg shadow-lg hover:scale-105 transition-transform duration-300" src="./media/11.JPG" alt="img11">
+                        <img class="h-auto max-w-full rounded-lg shadow-lg hover:scale-105 transition-transform duration-300" src="./media/13.jpg" alt="img13">
+                        <img class="h-auto max-w-full rounded-lg shadow-lg hover:scale-105 transition-transform duration-300" src="./media/15.JPG" alt="img15">
                     </div>
 
                     <div class="text-center mt-12">
@@ -635,7 +635,7 @@
                     playPromise.then(_ => {
                         audioStarted = true;
                         audio.muted = false;
-                        window.removeEventListener('click', startAudio);
+                        window.removeEventListener('scroll', startAudio);
                     }).catch(error => {
                         console.log("Audio prevented. Waiting for interaction.");
                     });
