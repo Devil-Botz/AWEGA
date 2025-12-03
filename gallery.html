@@ -6,6 +6,7 @@
     <title>Gallery | Awega25</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="tailwind.js"></script>
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     
@@ -51,13 +52,18 @@
         </h1>
 
         <div class="mb-16 text-center">
-            <h3 class="text-2xl sm:text-3xl font-bold text-white mb-6">Awega '24 Aftermovie</h3>
-            <div class="max-w-3xl mx-auto rounded-lg overflow-hidden shadow-xl border border-gray-800">
-                <div class="aspect-w-16 aspect-h-9 bg-gray-900 flex items-center justify-center">
-                    <iframe class="w-full h-full" style="aspect-ratio: 16/9;" src="https://youtu.be/CezdUj2PEy4?si=dSBJuWmqEZcpFnqZ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                </div>
-            </div>
+        <h3 class="text-2xl sm:text-3xl font-bold text-white mb-6">Awega '24 Aftermovie</h3>
+
+             <div class="max-w-3xl mx-auto rounded-lg overflow-hidden shadow-xl border border-gray-800">
+             <div class="aspect-w-16 aspect-h-9 bg-gray-900 flex items-center justify-center">
+            <video class="w-full h-full" style="aspect-ratio: 16/9;" controls>
+                <source src="./media/video1.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+          </div>
+          </div>
         </div>
+
 
         <h3 class="text-2xl sm:text-3xl font-bold text-white mb-8 text-center">Photo Gallery</h3>
         
@@ -86,8 +92,8 @@
         <footer class="bg-gray-950 border-t border-gray-800">
             <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12 text-center text-gray-400">
                <div class="flex justify-center items-center mb-0">
-               <img src="media/aimat_logo.png" alt="" class="w-32 h-32">
-               </div>
+                    <img src="./media/aimat_logo.png" alt="" class="w-[150px] h-[110px]">
+                </div>
 
                 
                 <p class="text-lg font-semibold text-gray-200 mb-6">MES Advanced Institute of Management and Technology</p>
