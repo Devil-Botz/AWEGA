@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery | Awega25</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="tailwind.js"></script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        
+        /* --- Starfield Background (Same as Index) --- */
+        .starfield {
+            background-color: #000;
+            background-image:
+                radial-gradient(1px 1px at 20px 30px, white, rgba(255,255,255,0)),
+                radial-gradient(1px 1px at 40px 70px, white, rgba(255,255,255,0)),
+                radial-gradient(1px 1px at 80px 120px, white, rgba(255,255,255,0)),
+                radial-gradient(2px 2px at 160px 240px, white, rgba(255,255,255,0));
+            animation: pan-starfield 180s linear infinite;
+            background-size: 250px 250px;
+            position: fixed; /* Fixed so it doesn't scroll away */
+            inset: 0;
+            z-index: -1;
+        }
+
+        @keyframes pan-starfield {
+            from { background-position: 0% 0%; }
+            to { background-position: 0% 2000%; }
+        }
+    </style>
+</head>
+<body class="bg-black text-gray-200 min-h-screen relative">
+
+    <div class="starfield"></div>
+
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12 relative z-10">
+        
+        <a href="index.html" class="inline-flex items-center gap-2 text-indigo-400 hover:text-white mb-8 transition-colors group">
+            <svg class="w-6 h-6 transform group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+            </svg>
+            Back to Awega25
+        </a>
+
+        <h1 class="text-3xl sm:text-5xl font-extrabold text-center text-white mb-12">
+            Awega '24 Full Gallery
+        </h1>
+
+        <div class="mb-16 text-center">
+        <h3 class="text-2xl sm:text-3xl font-bold text-white mb-6">Awega '24 Aftermovie</h3>
+
+             <div class="max-w-3xl mx-auto rounded-lg overflow-hidden shadow-xl border border-gray-800">
+             <div class="aspect-w-16 aspect-h-9 bg-gray-900 flex items-center justify-center">
+            <video class="w-full h-full" style="aspect-ratio: 16/9;" controls>
+                <source src="./media/video1.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+          </div>
+          </div>
+        </div>
+
+
+        <h3 class="text-2xl sm:text-3xl font-bold text-white mb-8 text-center">Photo Gallery</h3>
+        
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 pb-12">
+            <div class="grid gap-4">
+                <div><img class="h-auto max-w-full rounded-lg shadow-lg hover:scale-105 transition-transform duration-300" src="./media/1.JPG" alt="img1"></div>
+                <div><img class="h-auto max-w-full rounded-lg shadow-lg hover:scale-105 transition-transform duration-300" src="./media/2.JPG" alt="img2"></div>
+                <div><img class="h-auto max-w-full rounded-lg shadow-lg hover:scale-105 transition-transform duration-300" src="./media/3.JPG" alt="img3"></div>
+            </div>
+            <div class="grid gap-4">
+                <div><img class="h-auto max-w-full rounded-lg shadow-lg hover:scale-105 transition-transform duration-300" src="./media/4.JPG" alt="img4"></div>
+                <div><img class="h-auto max-w-full rounded-lg shadow-lg hover:scale-105 transition-transform duration-300" src="./media/5.JPG" alt="img5"></div>
+                <div><img class="h-auto max-w-full rounded-lg shadow-lg hover:scale-105 transition-transform duration-300" src="./media/6.JPG" alt="img6"></div>
+            </div>
+            <div class="grid gap-4">
+                <div><img class="h-auto max-w-full rounded-lg shadow-lg hover:scale-105 transition-transform duration-300" src="./media/7.JPG" alt="img7"></div>
+                <div><img class="h-auto max-w-full rounded-lg shadow-lg hover:scale-105 transition-transform duration-300" src="./media/8.JPG" alt="img8"></div>
+                <div><img class="h-auto max-w-full rounded-lg shadow-lg hover:scale-105 transition-transform duration-300" src="./media/9.JPG" alt="img9"></div>
+            </div>
+            <div class="grid gap-4">
+                <div> <img class="h-auto max-w-full rounded-lg shadow-lg hover:scale-105 transition-transform duration-300" src="./media/10.JPG" alt="img10"> </div>
+                <div> <img class="h-auto max-w-full rounded-lg shadow-lg hover:scale-105 transition-transform duration-300" src="./media/11.JPG" alt="img11"> </div>
+                <div> <img class="h-auto max-w-full rounded-lg shadow-lg hover:scale-105 transition-transform duration-300" src="./media/12.JPG" alt="img12"> </div>
+            </div>
+            <div class="grid gap-4">
+                <div> <img class="h-auto max-w-full rounded-lg shadow-lg hover:scale-105 transition-transform duration-300" src="./media/13.JPG" alt="img13"> </div>
+            </div>
+             <div class="grid gap-4">
+                <div> <img class="h-auto max-w-full rounded-lg shadow-lg hover:scale-105 transition-transform duration-300" src="./media/15.JPG" alt="img15"> </div>
+            </div>
+             <div class="grid gap-4">
+                <div> <img class="h-auto max-w-full rounded-lg shadow-lg hover:scale-105 transition-transform duration-300" src="./media/16.jpg" alt="img16"> </div>
+            </div>
+        </div>
+       </div>
+        <!-- Footer -->
+        <footer class="bg-gray-950 border-t border-gray-800">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12 text-center text-gray-400">
+               <div class="flex justify-center items-center mb-0">
+                    <img src="./media/aimat_logo.png" alt="" class="w-[150px] h-[110px]">
+                </div>
+
+                
+                <p class="text-lg font-semibold text-gray-200 mb-6">MES Advanced Institute of Management and Technology</p>
+                <p class="mb-6">Marampally, Aluva, Ernakulam, Kerala - 683107</p>
+                
+                <!-- Social Media Icons -->
+                <div class="flex justify-center space-x-6 mb-8">
+                    <!-- ... Social media SVG icons ... -->
+                    <a href="https://www.instagram.com/awega.25?igsh=b2pidnQzYjUxNmw3" class="text-gray-400 hover:text-white" aria-label="Instagram"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.148 3.227-1.669 4.771-4.919 4.919-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-3.252-.148-4.771-1.691-4.919-4.919-.058-1.265-.07-1.646-.07-4.85s.012-3.584.07-4.85c.148-3.227 1.669 4.771 4.919-4.919C8.416 2.175 8.796 2.163 12 2.163m0-1.081C8.741 1.082 8.362 1.093 7.098 1.15c-3.63.0166-6.174 2.71-6.34 6.34C1.093 8.762 1.082 9.14 1.082 12s.011 3.238.068 4.502c.166 3.63 2.71 6.174 6.34 6.34 1.264.057 1.643.068 4.502.068s3.238-.011 4.502-.068c3.63-.166 6.174-2.71 6.34-6.34.057-1.264.068-1.643.068-4.502s-.011-3.238-.068-4.502c-.166-3.63-2.71-6.174-6.34-6.34-1.264-.057-1.643-.068-4.502-.068H12zM12 7.84A4.16 4.16 0 1012 16.16 4.16 4.16 0 0012 7.84zM12 14.08a2.08 2.08 0 110-4.16 2.08 2.08 0 010 4.16zm6.406-7.046a.96.96 0 100-1.92.96.96 0 000 1.92z"></path></svg></a>
+                    <a href="https://www.facebook.com/mesaimatmarampally/?_rdr" class="text-gray-400 hover:text-white" aria-label="Facebook"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M22.675 0h-21.35C.59 0 0 .59 0 1.325v21.351C0 23.41.59 24 1.325 24H12.82v-9.294H9.692v-3.622h3.128V8.413c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12V24h6.116c.735 0 1.325-.59 1.325-1.325V1.325C24 .59 23.41 0 22.675 0z"></path></svg></a>
+                </div>
+                
+                <p class="mb-4">&copy; 2025 MES AIMAT. All rights reserved. Designed for Awega25.</p>
+                <p>
+                    Developed by 
+                    <a href="https://www.instagram.com/_aswi._n?igsh=Z2ZoN2xjNGE4OGxv" target="_blank" rel="noopener noreferrer" class="font-semibold text-fuchsia-400 hover:underline">Aswin</a> 
+                    & 
+                    <a href="https://www.instagram.com/__.r.i.z.w.a.n.__?igsh=MTF3cXBsNDNwdmQ0aQ==" target="_blank" rel="noopener noreferrer" class="font-semibold text-cyan-400 hover:underline">Rizwan</a>
+
+            </div>
+        </footer>
+</body>
+</html>
