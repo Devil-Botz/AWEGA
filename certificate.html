@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certificate Download | Awega25</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Great+Vibes&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #000;
+            color: #e5e7eb;
+        }
+        /* Handwritten font for the inputs on the certificate */
+        .handwritten {
+            font-family: 'Great Vibes', cursive;
+        }
+        
+        /* Starfield Background (Same as main site) */
+        .starfield {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            background-image: 
+                radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 3px),
+                radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 2px),
+                radial-gradient(white, rgba(255,255,255,.1) 2px, transparent 3px);
+            background-size: 550px 550px, 350px 350px, 250px 250px;
+            background-position: 0 0, 40px 60px, 130px 270px;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <div class="starfield"></div>
+
+    <header class="bg-black/80 backdrop-blur-md sticky top-0 z-50 border-b border-indigo-900/30">
+        <nav class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="index.html" class="flex items-center space-x-2 text-white hover:text-indigo-400 transition">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                <span class="font-bold text-lg">Back to Home</span>
+            </a>
+            <h1 class="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-cyan-400">
+                Participation Certificate
+            </h1>
+        </nav>
+    </header>
+
+    <main class="flex-grow container mx-auto px-4 py-12 flex flex-col lg:flex-row gap-12 items-start justify-center">
+        
+        <div class="w-full lg:w-1/3 bg-gray-900/80 p-8 rounded-xl border border-indigo-500/30 shadow-2xl backdrop-blur-sm">
+            <h2 class="text-2xl font-bold text-white mb-6">Enter Details</h2>
+            
+            <form id="certForm" class="space-y-6">
+                <div>
+                    <label class="block text-sm font-medium text-gray-400 mb-2">Participant Name</label>
+                    <input type="text" id="participantName" placeholder="e.g., John Doe" required
+                        class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white focus:ring-2 focus:ring-indigo-500 focus:outline-none transition">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-400 mb-2">College / Institution</label>
+                    <input type="text" id="collegeName" placeholder="e.g., MES AIMAT" required
+                        class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white focus:ring-2 focus:ring-indigo-500 focus:outline-none transition">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-400 mb-2">Event Participated</label>
+                    <select id="eventName" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white focus:ring-2 focus:ring-indigo-500 focus:outline-none transition">
+                        <option value="Coding Event">Coding Event</option>
+                        <option value="Promptify">Promptify</option>
+                        <option value="Treasure Hunt">Treasure Hunt</option>
+                        <option value="E-Games (PES/BGMI)">E-Games</option>
+                        <option value="AI Video Making">AI Video Making</option>
+                        <option value="Gravity Groove (Spot Dance)">Spot Dance</option>
+                        <option value="Theme Walk">Theme Walk</option>
+                        <option value="3's Football">3's Football</option>
+                    </select>
+                </div>
+
+                <div class="pt-4 space-y-3">
+                    <button type="button" onclick="generateCertificate()" 
+                        class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-3 rounded-lg transition shadow-lg shadow-indigo-500/20">
+                        Generate Preview
+                    </button>
+                    <button type="button" id="downloadBtn" onclick="downloadCertificate()" disabled
+                        class="w-full bg-red-600 hover:bg-red-500 disabled:bg-gray-700 disabled:cursor-not-allowed text-white font-bold py-3 rounded-lg transition flex justify-center items-center gap-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                        Download Certificate
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <div class="w-full lg:w-2/3 flex flex-col items-center">
+            <h2 class="text-xl font-semibold text-gray-400 mb-4">Preview</h2>
+            
+            <div class="relative w-full max-w-4xl rounded-xl overflow-hidden shadow-2xl border border-gray-700 bg-gray-800">
+                <canvas id="certCanvas" class="hidden"></canvas>
+                <img id="certPreview" src="media/certificate_template.jpg" class="w-full h-auto object-contain" alt="Certificate Preview">
+            </div>
+            <p class="text-sm text-gray-500 mt-4 text-center">
+                *Ensure details are correct before downloading. Best viewed on Desktop.
+            </p>
+        </div>
+
+    </main>
+
+    <script>
+        const canvas = document.getElementById('certCanvas');
+        const ctx = canvas.getContext('2d');
+        const previewImg = document.getElementById('certPreview');
+        const downloadBtn = document.getElementById('downloadBtn');
+        
+        // 1. Load the Template Image
+        const certificateImage = new Image();
+        // IMPORTANT: Ensure this path matches where you saved the certificate image
+        certificateImage.src = 'media/certificate_template.jpg'; 
+
+        // Wait for image to load to set canvas dimensions
+        certificateImage.onload = function() {
+            canvas.width = certificateImage.width;
+            canvas.height = certificateImage.height;
+            // Draw initial clean template
+            ctx.drawImage(certificateImage, 0, 0);
+        };
+
+        function generateCertificate() {
+            const name = document.getElementById('participantName').value;
+            const college = document.getElementById('collegeName').value;
+            const event = document.getElementById('eventName').value;
+
+            if(!name || !college) {
+                alert("Please fill in all details.");
+                return;
+            }
+
+            // 1. Clear and Redraw Template
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.drawImage(certificateImage, 0, 0);
+
+            // 2. Configure Text Styles
+            // We use a clean, italicized font to look like filled details
+            ctx.font = "italic bold 40px 'Inter', sans-serif"; 
+            ctx.fillStyle = "#ffffff"; // White text
+            ctx.textAlign = "center";
+
+            // 3. Draw Text at Coordinates
+            // Note: These coordinates (X, Y) are estimates based on the image provided.
+            // You may need to tweak the 'Y' values slightly.
+            
+            // Image Dimensions are approx 1600x1130 based on aspect ratio
+            // Center X is roughly canvas.width / 2 if the design is centered.
+            // Let's assume the design aligns somewhat to the center of the blanks.
+            
+            // A. Name Position (Line 1)
+            // "This is to certify that ____________"
+            // Coordinates: Center of the line roughly at X=700, Y=620 (adjust based on real image size)
+            // Let's calculate relative to image size for better accuracy
+            const centerX = canvas.width * 0.45; // Moved slightly left of center based on the line position
+            
+            // Name
+            ctx.font = "italic 38px 'Inter', sans-serif"; // Fancy font for name
+            ctx.fillText(name, canvas.width * 0.65, canvas.height * 0.620); 
+
+            // B. College Position (Line 2)
+            // "of _________________ has participated in"
+            ctx.font = "italic 35px 'Inter', sans-serif"; // Standard font for other details
+            ctx.fillText(college, canvas.width * 0.50, canvas.height * 0.65);
+
+            // C. Event Position (Line 3)
+            // "__________________ as a part of AWEGA 2K25"
+            ctx.font = "italic 35px 'Inter', sans-serif";
+            ctx.fillText(event, canvas.width * 0.45, canvas.height * 0.69);
+
+            // 4. Update Preview Image
+            // Convert canvas to data URL and set it as the src of the preview image tag
+            previewImg.src = canvas.toDataURL('image/jpeg');
+            
+            // 5. Enable Download
+            downloadBtn.disabled = false;
+            downloadBtn.classList.remove('bg-gray-700', 'cursor-not-allowed');
+            downloadBtn.classList.add('bg-red-600', 'hover:bg-red-500');
+        }
+        function downloadCertificate() {
+            // Check if library is loaded
+            if (!window.jspdf) {
+                alert("PDF Library is not loaded yet. Please refresh the page.");
+                return;
+            }
+
+            const { jsPDF } = window.jspdf;
+            
+            // Create PDF: Landscape ('l'), millimeters ('mm'), A4 size
+            const doc = new jsPDF('l', 'mm', 'a4');
+
+            // Get the image data from the canvas
+            const imgData = canvas.toDataURL('image/jpeg', 1.0);
+
+            // Get the width and height of the PDF page (A4 Landscape is 297x210 mm)
+            const pageWidth = doc.internal.pageSize.getWidth();
+            const pageHeight = doc.internal.pageSize.getHeight();
+
+            // Add the image to the PDF, stretching it to fit the page
+            doc.addImage(imgData, 'JPEG', 0, 0, pageWidth, pageHeight);
+
+            // Save the PDF
+            const safeName = document.getElementById('participantName').value.replace(/\s+/g, '_');
+            doc.save(`Awega25_Certificate_${safeName}.pdf`);
+        }
+        // Image/jpg download
+        // function downloadCertificate() {
+        //     // Create a temporary link
+        //     const link = document.createElement('a');
+        //     link.download = `Awega25_Certificate_${document.getElementById('participantName').value}.jpg`;
+        //     link.href = canvas.toDataURL('image/jpeg', 1.0); // High quality
+        //     link.click();
+        // }
+    </script>
+</body>
+</html>
