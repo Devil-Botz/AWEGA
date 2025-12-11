@@ -130,9 +130,9 @@
         };
 
         function generateCertificate() {
-            const name = document.getElementById('participantName').value;
-            const college = document.getElementById('collegeName').value;
-            const event = document.getElementById('eventName').value;
+            const name = document.getElementById('participantName').value.toUpperCase();
+            const college = document.getElementById('collegeName').value.toUpperCase();
+            const event = document.getElementById('eventName').value.toUpperCase();
 
             if(!name || !college) {
                 alert("Please fill in all details.");
@@ -175,7 +175,7 @@
             // C. Event Position (Line 3)
             // "__________________ as a part of AWEGA 2K25"
             ctx.font = "italic 35px 'Inter', sans-serif";
-            ctx.fillText(event, canvas.width * 0.45, canvas.height * 0.69);
+            ctx.fillText(event, canvas.width * 0.45, canvas.height * 0.697);
 
             // 4. Update Preview Image
             // Convert canvas to data URL and set it as the src of the preview image tag
