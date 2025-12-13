@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sliding Tile Puzzle</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --board-size: 400px;
+            --tile-size: calc(var(--board-size) / 3);
+            /* Landscape Image */
+            --puzzle-image: url('https://images.unsplash.com/photo-1472214103451-9374bd1c798e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80');
+        }
+
+        body {
+            color: white;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            touch-action: manipulation;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            
+            /* Starfield Background Rules */
+            background-color: #000;
+            background-image:
+                radial-gradient(1px 1px at 20px 30px, white, rgba(255,255,255,0)),
+                radial-gradient(1px 1px at 40px 70px, white, rgba(255,255,255,0)),
+                radial-gradient(1px 1px at 80px 120px, white, rgba(255,255,255,0)),
+                radial-gradient(2px 2px at 160px 240px, white, rgba(255,255,255,0)),
+                radial-gradient(1px 1px at 90px 40px, white, rgba(255,255,255,0)),
+                radial-gradient(1px 1px at 130px 200px, white, rgba(255,255,255,0)),
+                radial-gradient(1px 1px at 180px 50px, white, rgba(255,255,255,0));
+            animation: pan-starfield 180s linear infinite;
+            background-size: 250px 250px;
+            background-repeat: repeat;
+        }
+
+        @keyframes pan-starfield {
+            0% { background-position: 0 0; }
+            100% { background-position: 10000px 5000px; }
+        }
+
+        .puzzle-board {
+            width: var(--board-size);
+            height: var(--board-size);
+            position: relative;
+            border: 4px solid rgba(255, 255, 255, 0.2);
+            background-color: rgba(30, 41, 59, 0.8);
+            backdrop-filter: blur(5px);
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.8);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .tile {
+            width: var(--tile-size);
+            height: var(--tile-size);
+            position: absolute;
+            background-image: var(--puzzle-image);
+            background-size: var(--board-size) var(--board-size);
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            box-sizing: border-box;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0;
+        }
+
+        .tile:hover {
+            filter: brightness(1.2);
+            z-index: 10;
+            border-color: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        }
+
+        .tile.empty {
+            opacity: 0;
+            pointer-events: none;
+            cursor: default;
+        }
+
+        /* Pop Animation for Win Overlay */
+        .win-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.9);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            z-index: 50;
+            transform: scale(0.5);
+            transition: opacity 0.3s ease, transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Elastic pop */
+        }
+
+        .win-overlay.show {
+            opacity: 1;
+            pointer-events: auto;
+            transform: scale(1);
+        }
+
+        /* Confetti Particles */
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background-color: #f00;
+            pointer-events: none;
+            z-index: 100;
+            animation: fall linear forwards;
+        }
+
+        @keyframes fall {
+            to { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+        }
+
+        @media (max-width: 500px) {
+            :root {
+                --board-size: 90vw;
+            }
+        }
+    </style>
+</head>
+<body class="p-4">
+
+    <!-- Header -->
+    <div class="text-center mb-8 relative z-10">
+        <h1 class="text-5xl font-bold text-white mb-2 drop-shadow-lg tracking-wider">
+            Sliding Puzzle
+        </h1>
+        <p class="text-blue-100 text-sm opacity-80">Restore the image to win</p>
+    </div>
+
+    <!-- Game Container -->
+    <div class="relative group z-10">
+        
+        <!-- Board -->
+        <div id="board" class="puzzle-board">
+            <!-- Tiles generated by JS -->
+            <div class="win-overlay" id="winOverlay">
+                <div class="text-6xl mb-4">🎉</div>
+                <h2 class="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-orange-500 mb-2">Victory!</h2>
+                <p class="text-white mb-6">Puzzle Completed</p>
+                <button onclick=" " class="px-8 py-3 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 rounded-full font-bold text-white shadow-lg transition-all transform hover:scale-105">
+                   Here add clue for next round
+                </button>
+            </div>
+        </div>
+
+        <!-- Reference Image (Desktop Hover) -->
+        <div class="absolute -right-32 top-0 hidden lg:block opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <div class="w-24 h-24 border-2 border-white/50 rounded overflow-hidden shadow-lg">
+                <img src="https://images.unsplash.com/photo-1472214103451-9374bd1c798e?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" class="w-full h-full object-cover">
+            </div>
+            <p class="text-xs text-center text-white/70 mt-1">Reference</p>
+        </div>
+    </div>
+
+    <!-- Controls -->
+    <div class="mt-10 flex gap-4 z-10">
+        <button onclick="shuffleGame()" class="flex items-center gap-2 px-6 py-3 bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 rounded-lg font-medium transition-all text-white shadow-lg">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/><path d="M16 16h5v5"/></svg>
+            Shuffle Board
+        </button>
+    </div>
+
+    <script>
+        const board = document.getElementById('board');
+        const winOverlay = document.getElementById('winOverlay');
+        const GRID_SIZE = 3;
+        const TOTAL_TILES = GRID_SIZE * GRID_SIZE;
+        
+        // state[i] stores the index of the tile currently in slot i (0-8)
+        let state = []; 
+
+        function initGame() {
+            state = [0, 1, 2, 3, 4, 5, 6, 7, 8]; // Solved state
+            renderBoard();
+            setTimeout(shuffleGame, 500);
+        }
+
+        function createTileElement(tileIndex) {
+            const tile = document.createElement('div');
+            tile.classList.add('tile');
+            tile.id = `tile-${tileIndex}`;
+            
+            if (tileIndex === 8) {
+                tile.classList.add('empty');
+            } else {
+                const row = Math.floor(tileIndex / GRID_SIZE);
+                const col = tileIndex % GRID_SIZE;
+                tile.style.backgroundPosition = `${col * 50}% ${row * 50}%`;
+            }
+
+            tile.onclick = () => handleMove(tileIndex);
+            return tile;
+        }
+
+        function renderBoard() {
+            const overlay = winOverlay.cloneNode(true);
+            board.innerHTML = '';
+            board.appendChild(overlay);
+
+            for (let i = 0; i < TOTAL_TILES; i++) {
+                const tileIndex = state[i];
+                const tile = createTileElement(tileIndex);
+                updateTilePosition(tile, i);
+                board.appendChild(tile);
+            }
+        }
+
+        function updateTilePosition(element, slotIndex) {
+            const row = Math.floor(slotIndex / GRID_SIZE);
+            const col = slotIndex % GRID_SIZE;
+            element.style.top = `${row * (100/GRID_SIZE)}%`;
+            element.style.left = `${col * (100/GRID_SIZE)}%`;
+        }
+
+        function handleMove(tileIndex) {
+            const currentSlot = state.indexOf(tileIndex);
+            const emptySlot = state.indexOf(8);
+
+            if (isAdjacent(currentSlot, emptySlot)) {
+                state[emptySlot] = state[currentSlot];
+                state[currentSlot] = 8;
+
+                const tileEl = document.getElementById(`tile-${tileIndex}`);
+                const emptyEl = document.getElementById(`tile-8`);
+                
+                updateTilePosition(tileEl, emptySlot);
+                updateTilePosition(emptyEl, currentSlot);
+
+                checkWin();
+            }
+        }
+
+        function isAdjacent(slotA, slotB) {
+            const rowA = Math.floor(slotA / GRID_SIZE);
+            const colA = slotA % GRID_SIZE;
+            const rowB = Math.floor(slotB / GRID_SIZE);
+            const colB = slotB % GRID_SIZE;
+            return (Math.abs(rowA - rowB) + Math.abs(colA - colB)) === 1;
+        }
+
+        function shuffleGame() {
+            // Remove confetti if any
+            document.querySelectorAll('.confetti').forEach(el => el.remove());
+            
+            document.getElementById('winOverlay').classList.remove('show');
+            
+            let moves = 0;
+            const maxMoves = 100;
+            const interval = setInterval(() => {
+                const emptySlot = state.indexOf(8);
+                const adjacentSlots = [];
+                const row = Math.floor(emptySlot / GRID_SIZE);
+                const col = emptySlot % GRID_SIZE;
+
+                if (row > 0) adjacentSlots.push(emptySlot - 3);
+                if (row < 2) adjacentSlots.push(emptySlot + 3);
+                if (col > 0) adjacentSlots.push(emptySlot - 1);
+                if (col < 2) adjacentSlots.push(emptySlot + 1);
+
+                const randomSlot = adjacentSlots[Math.floor(Math.random() * adjacentSlots.length)];
+                const tileToMove = state[randomSlot];
+                
+                state[randomSlot] = 8;
+                state[emptySlot] = tileToMove;
+
+                const tileEl = document.getElementById(`tile-${tileToMove}`);
+                const emptyEl = document.getElementById(`tile-8`);
+                
+                tileEl.style.transition = 'none';
+                emptyEl.style.transition = 'none';
+                
+                updateTilePosition(tileEl, emptySlot);
+                updateTilePosition(emptyEl, randomSlot);
+
+                void tileEl.offsetWidth;
+
+                setTimeout(() => {
+                    tileEl.style.transition = '';
+                    emptyEl.style.transition = '';
+                }, 50);
+
+                moves++;
+                if (moves >= maxMoves) clearInterval(interval);
+            }, 10);
+        }
+
+        function checkWin() {
+            const isWin = state.every((val, index) => val === index);
+            
+            if (isWin) {
+                const emptyTile = document.getElementById('tile-8');
+                emptyTile.style.opacity = '1'; 
+                // Align last tile image
+                const row = 2; 
+                const col = 2;
+                emptyTile.style.backgroundPosition = `${col * 50}% ${row * 50}%`;
+                emptyTile.style.backgroundImage = 'var(--puzzle-image)';
+                
+                setTimeout(() => {
+                    document.getElementById('winOverlay').classList.add('show');
+                    celebrate();
+                }, 300);
+            }
+        }
+
+        // Confetti Celebration
+        function celebrate() {
+            const colors = ['#fde047', '#3b82f6', '#ef4444', '#22c55e', '#a855f7', '#ffffff'];
+            
+            for (let i = 0; i < 150; i++) {
+                const confetti = document.createElement('div');
+                confetti.classList.add('confetti');
+                
+                // Random starting position
+                const startLeft = Math.random() * 100;
+                confetti.style.left = startLeft + 'vw';
+                confetti.style.top = -10 + 'px';
+                
+                // Random background color
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                
+                // Random animation duration and delay
+                const duration = Math.random() * 3 + 2;
+                confetti.style.animationDuration = duration + 's';
+                confetti.style.animationDelay = Math.random() * 1 + 's';
+                
+                // Random size
+                const size = Math.random() * 8 + 5 + 'px';
+                confetti.style.width = size;
+                confetti.style.height = size;
+                
+                document.body.appendChild(confetti);
+                
+                // Remove after animation
+                setTimeout(() => confetti.remove(), duration * 1000 + 1000);
+            }
+        }
+
+        // Start
+        initGame();
+
+    </script>
+</body>
+</html>
