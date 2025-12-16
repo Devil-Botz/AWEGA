@@ -117,7 +117,7 @@
             
             <div class="relative w-full max-w-4xl rounded-xl overflow-hidden shadow-2xl border border-gray-700 bg-gray-800">
                 <canvas id="certCanvas" class="hidden"></canvas>
-                <img id="certPreview" src="media/certificate_template.jpg" class="w-full h-auto object-contain" alt="Certificate Preview">
+                <img id="certPreview" src="media/certificate_template1.jpg" class="w-full h-auto object-contain" alt="Certificate Preview">
             </div>
             <p class="text-sm text-gray-500 mt-4 text-center">
                 *Ensure details are correct before downloading. Best viewed on Desktop.
@@ -135,7 +135,7 @@
         // 1. Load the Template Image
         const certificateImage = new Image();
         // IMPORTANT: Ensure this path matches where you saved the certificate image
-        certificateImage.src = 'media/certificate_template.jpg'; 
+        certificateImage.src = 'media/certificate_template1.jpg'; 
 
         // Wait for image to load to set canvas dimensions
         certificateImage.onload = function() {
@@ -162,7 +162,7 @@
             // 2. Configure Text Styles
             // We use a clean, italicized font to look like filled details
             ctx.font = "italic bold 40px 'Inter', sans-serif"; 
-            ctx.fillStyle = "#ffffff"; // White text
+            ctx.fillStyle = "#000000"; // White text
             ctx.textAlign = "center";
 
             // 3. Draw Text at Coordinates
@@ -180,18 +180,18 @@
             const centerX = canvas.width * 0.45; // Moved slightly left of center based on the line position
             
             // Name
-            ctx.font = "italic 38px 'Inter', sans-serif"; // Fancy font for name
-            ctx.fillText(name, canvas.width * 0.65, canvas.height * 0.620); 
+            ctx.font = "bold italic 38px 'Inter', sans-serif"; // Fancy font for name
+            ctx.fillText(name, canvas.width * 0.65, canvas.height * 0.616); 
 
             // B. College Position (Line 2)
             // "of _________________ has participated in"
-            ctx.font = "italic 35px 'Inter', sans-serif"; // Standard font for other details
-            ctx.fillText(college, canvas.width * 0.50, canvas.height * 0.65);
+            ctx.font = "bold italic 35px 'Inter', sans-serif"; // Standard font for other details
+            ctx.fillText(college, canvas.width * 0.50, canvas.height * 0.664);
 
             // C. Event Position (Line 3)
             // "__________________ as a part of AWEGA 2K25"
-            ctx.font = "italic 35px 'Inter', sans-serif";
-            ctx.fillText(event, canvas.width * 0.45, canvas.height * 0.697);
+            ctx.font = "bold italic 35px 'Inter', sans-serif";
+            ctx.fillText(event, canvas.width * 0.45, canvas.height * 0.713);
 
             // 4. Update Preview Image
             // Convert canvas to data URL and set it as the src of the preview image tag
